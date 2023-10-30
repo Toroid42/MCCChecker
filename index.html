@@ -4,97 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MCC Description Mapper</title>
+    <style>
+        body {
+            background-color: rgb(47, 21, 120);
+            color: gold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+        }
+
+        input {
+            background-color: white;
+        }
+
+        .orange-background {
+            background-color: orange;
+        }
+
+        .container {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
     <h1>MCC Description Mapper</h1>
 
-    <label for="selectMCC">MCC:</label>
-    <select id="selectMCC" onchange="updateSelect('mcc')"></select>
-    <br><br>
+    <div>
+        <label for="selectMCC"><b>MCC:</b></label>
+        <select id="selectMCC" onchange="updateSelect('mcc')"></select>
+    </div>
+    <br>
 
-    <label for="selectName">Description:</label>
-    <select id="selectName" onchange="updateSelect('name')"></select>
+    <div>
+        <label for="selectName"><b>Description:</b></label>
+        <select id="selectName" onchange="updateSelect('name')"></select>
+    </div>
+    <br>
 
-    <script>
-        let data;
+    <div>
+        <label for="isInBlacklist"><b>Cashback at Renegade:</b></label>
+        <input id="isInBlacklist" type="text" readonly></input>
+    </div>
 
-        function parseCSV(csv) {
-            const lines = csv.split('\n');
-            const result = [];
-            const headers = lines[0].split(';').map(h => h.trim());
+    <div>
+        <br>
+        <label><b>My ETH/BSC/MATIC wallet if you want to support me:</b>
+            0xB9dcf72f21553013c56a1C92B2C7f1FB3f26a450</label>
+    </div>
 
-            for (let i = 1; i < lines.length; i++) {
-                const currentline = lines[i].split(';').map(c => c.trim());
+    <div>
+        <br>
+        <label style="color: darkgray;">This calculator is an independent project and is not affiliated with the
+            official Renegade team. Please note that there is no warranty for its correctness, and users should verify
+            results independently for accuracy.</label>
+    </div>
+</div>
+<script>
+    let data;
 
-                const obj = {};
-                for (let j = 0; j < headers.length; j++) {
-                    obj[headers[j]] = currentline[j];
-                }
-                result.push(obj);
+    function parseCSV(csv) {
+        const lines = csv.split('\n');
+        const result = [];
+        const headers = lines[0].split(';').map(h => h.trim());
+
+        for (let i = 1; i < lines.length; i++) {
+            const currentline = lines[i].split(';').map(c => c.trim());
+
+            const obj = {};
+            for (let j = 0; j < headers.length; j++) {
+                obj[headers[j]] = currentline[j];
             }
-            return result;
+            result.push(obj);
         }
+        return result;
+    }
 
-        function populateSelectMCC() {
-            const selectMCC = document.getElementById('selectMCC');
-            const mccOptions = [];
+    function populateSelectMCC() {
+        const selectMCC = document.getElementById('selectMCC');
+        const mccOptions = [];
 
-            data.forEach(item => {
-                const optionMCC = document.createElement('option');
-                optionMCC.value = item.MCC;
-                optionMCC.textContent = item.MCC;
-                mccOptions.push(optionMCC);
-            });
+        mccData.forEach(item => {
+            const optionMCC = document.createElement('option');
+            optionMCC.value = item.MCC;
+            optionMCC.textContent = item.MCC;
+            mccOptions.push(optionMCC);
+        });
 
-            mccOptions.sort((a, b) => parseInt(a.value) - parseInt(b.value));
-            mccOptions.forEach(option => selectMCC.appendChild(option));
+        mccOptions.sort((a, b) => parseInt(a.value) - parseInt(b.value));
+        mccOptions.forEach(option => selectMCC.appendChild(option));
 
-            // Set initial MCC value
-            selectMCC.value = data[0].MCC;
-        }
+        // Set initial MCC value
+        selectMCC.value = mccData[0].MCC;
+    }
 
-        function populateSelectName() {
-            const selectName = document.getElementById('selectName');
-            const nameOptions = [];
+    function populateSelectName() {
+        const selectName = document.getElementById('selectName');
+        const nameOptions = [];
 
-            data.forEach(item => {
-                const optionName = document.createElement('option');
-                optionName.value = item.Name;
-                optionName.textContent = item.Name;
-                nameOptions.push(optionName);
-            });
+        mccData.forEach(item => {
+            const optionName = document.createElement('option');
+            optionName.value = item.Name;
+            optionName.textContent = item.Name;
+            nameOptions.push(optionName);
+        });
 
-            nameOptions.sort((a, b) => a.value.localeCompare(b.value));
-            nameOptions.forEach(option => selectName.appendChild(option));
+        nameOptions.sort((a, b) => a.value.localeCompare(b.value));
+        nameOptions.forEach(option => selectName.appendChild(option));
 
-            // Set initial Name value
-            selectName.value = data[0].Name;
-        }
+        // Set initial Name value
+        selectName.value = mccData[0].Name;
+    }
 
-        function updateSelect(type) {
-            const selectMCC = document.getElementById('selectMCC');
-            const selectName = document.getElementById('selectName');
+    function updateSelect(type) {
+        const selectMCC = document.getElementById('selectMCC');
+        const selectName = document.getElementById('selectName');
+        const isInBlacklistDiv = document.getElementById('isInBlacklist');
 
-            if (!data) return;
+        if (!mccData) return;
 
-            if (type === 'mcc') {
-                const selectedMCC = selectMCC.value;
-                selectName.value = "";
-                const selectedRow = data.find(item => item.MCC === selectedMCC);
-                if (selectedRow) {
-                    selectName.value = selectedRow.Name;
-                }
-            } else if (type === 'name') {
-                const selectedName = selectName.value;
-                selectMCC.value = "";
-                const selectedRow = data.find(item => item.Name === selectedName);
-                if (selectedRow) {
-                    selectMCC.value = selectedRow.MCC;
+        if (type === 'mcc') {
+            const selectedMCC = selectMCC.value;
+            selectName.value = "";
+            const selectedRow = mccData.find(item => item.MCC === selectedMCC);
+            if (selectedRow) {
+                selectName.value = selectedRow.Name;
+                const isInBlacklist = isMCCInBlacklist(renegadeMccBlacklist, selectedMCC);
+                if (isInBlacklist) {
+                    isInBlacklistDiv.value = `NO`;
+                    isInBlacklistDiv.classList.add('orange-background');
+                } else {
+                    isInBlacklistDiv.value = `YES`;
+                    isInBlacklistDiv.classList.remove('orange-background');
                 }
             }
+        } else if (type === 'name') {
+            const selectedName = selectName.value;
+            selectMCC.value = "";
+            const selectedRow = mccData.find(item => item.Name === selectedName);
+            if (selectedRow) {
+                selectMCC.value = selectedRow.MCC;
+            }
         }
+    }
 
-        const csvData = `MCC;Name
+    function isMCCInBlacklist(blackList, mcc) {
+        return blackList.some(item => item.MCC === mcc);
+    }
+
+    const mccDataCsv = `MCC;Name
 742;Veterinary services
 743;Wine producers
 744;Champagne producers
@@ -428,9 +489,58 @@
 9754;Gambling-Horse, Dog Racing, State Lottery
 9950;Intra-Company Purchases`;
 
-        data = parseCSV(csvData);
-        populateSelectMCC();
-        populateSelectName();
-    </script>
+    const renegadeMccBlacklistCsv = `MCC
+4784
+4829
+4900
+5960
+6010
+6011
+6012
+6050
+6051
+6211
+6300
+6381
+6513
+6532
+6533
+6536
+6537
+6538
+6540
+7276
+7399
+7523
+7800
+7801
+7802
+7995
+7997
+8398
+8641
+8651
+8661
+8675
+8699
+8931
+8999
+9211
+9222
+9223
+9311
+9399
+9402
+9405
+9406
+9411`
+
+    mccData = parseCSV(mccDataCsv);
+    renegadeMccBlacklist = parseCSV(renegadeMccBlacklistCsv);
+    populateSelectMCC();
+    populateSelectName();
+    updateSelect('mcc');
+
+</script>
 </body>
 </html>
