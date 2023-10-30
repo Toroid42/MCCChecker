@@ -24,6 +24,10 @@
             background-color: orange;
         }
 
+        .green-background {
+            background-color: lawngreen;
+        }
+
         .container {
             text-align: left;
         }
@@ -148,25 +152,31 @@
                 if (inRengadeBlacklist) {
                     cashbackRenegade.value = `NO`;
                     cashbackRenegade.classList.add('orange-background');
+                    cashbackRenegade.classList.remove('green-background');
                 } else {
                     cashbackRenegade.value = `YES`;
                     cashbackRenegade.classList.remove('orange-background');
+                    cashbackRenegade.classList.add('green-background');
                 }
                 const inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectedMCC);
                 if (inHiBlacklist) {
                     cashbackHi.value = `NO`;
                     cashbackHi.classList.add('orange-background');
+                    cashbackHi.classList.remove('green-background');
                 } else {
                     cashbackHi.value = `YES`;
                     cashbackHi.classList.remove('orange-background');
+                    cashbackHi.classList.add('green-background');
                 }
                 const inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectedMCC);
                 if (inPlutusBlacklist) {
                     cashbackPlutus.value = `NO`;
                     cashbackPlutus.classList.add('orange-background');
+                    cashbackPlutus.classList.remove('green-background');
                 } else {
                     cashbackPlutus.value = `YES`;
                     cashbackPlutus.classList.remove('orange-background');
+                    cashbackPlutus.classList.add('green-background');
                 }
             }
         } else if (type === 'name') {
