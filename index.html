@@ -46,8 +46,18 @@
     <br>
 
     <div>
-        <label for="isInBlacklist"><b>Cashback at Renegade:</b></label>
-        <input id="isInBlacklist" type="text" readonly></input>
+        <label for="cashbackRenegade"><b>Cashback at Renegade:</b></label>
+        <input id="cashbackRenegade" type="text" readonly/>
+    </div>
+
+    <div>
+        <label for="cashbackHi"><b>Cashback at Hi:</b></label>
+        <input id="cashbackHi" type="text" readonly/>
+    </div>
+
+    <div>
+        <label for="cashbackPlutus"><b>Cashback at Plutus:</b></label>
+        <input id="cashbackPlutus" type="text" readonly/>
     </div>
 
     <div>
@@ -122,7 +132,9 @@
     function updateSelect(type) {
         const selectMCC = document.getElementById('selectMCC');
         const selectName = document.getElementById('selectName');
-        const isInBlacklistDiv = document.getElementById('isInBlacklist');
+        const cashbackRenegade = document.getElementById('cashbackRenegade');
+        const cashbackHi = document.getElementById('cashbackHi');
+        const cashbackPlutus = document.getElementById('cashbackPlutus');
 
         if (!mccData) return;
 
@@ -132,13 +144,29 @@
             const selectedRow = mccData.find(item => item.MCC === selectedMCC);
             if (selectedRow) {
                 selectName.value = selectedRow.Name;
-                const isInBlacklist = isMCCInBlacklist(renegadeMccBlacklist, selectedMCC);
-                if (isInBlacklist) {
-                    isInBlacklistDiv.value = `NO`;
-                    isInBlacklistDiv.classList.add('orange-background');
+                const inRengadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectedMCC);
+                if (inRengadeBlacklist) {
+                    cashbackRenegade.value = `NO`;
+                    cashbackRenegade.classList.add('orange-background');
                 } else {
-                    isInBlacklistDiv.value = `YES`;
-                    isInBlacklistDiv.classList.remove('orange-background');
+                    cashbackRenegade.value = `YES`;
+                    cashbackRenegade.classList.remove('orange-background');
+                }
+                const inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectedMCC);
+                if (inHiBlacklist) {
+                    cashbackHi.value = `NO`;
+                    cashbackHi.classList.add('orange-background');
+                } else {
+                    cashbackHi.value = `YES`;
+                    cashbackHi.classList.remove('orange-background');
+                }
+                const inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectedMCC);
+                if (inPlutusBlacklist) {
+                    cashbackPlutus.value = `NO`;
+                    cashbackPlutus.classList.add('orange-background');
+                } else {
+                    cashbackPlutus.value = `YES`;
+                    cashbackPlutus.classList.remove('orange-background');
                 }
             }
         } else if (type === 'name') {
@@ -489,7 +517,7 @@
 9754;Gambling-Horse, Dog Racing, State Lottery
 9950;Intra-Company Purchases`;
 
-    const renegadeMccBlacklistCsv = `MCC
+    const mccBlacklistRenegadeCsv = `MCC
 4784
 4829
 4900
@@ -535,8 +563,70 @@
 9406
 9411`
 
+    const mccBlacklistHiCsv = `MCC
+4722
+4829
+4900
+5817
+5972
+6010
+6011
+6012
+6050
+6051
+6211
+6532
+6533
+6536
+6537
+6538
+6540
+7012
+7273
+7297
+7399
+7800
+7801
+7802
+7995
+7996
+8398
+8398
+8641
+8651
+8661
+8931
+8999
+9222
+9223
+9311
+9402
+9405
+9406
+9399
+9754
+`
+    const mccBlacklistPlutusCsv = `MCC
+4829
+5094
+5734
+5944
+6010
+6011
+6012
+6051
+6211
+6540
+7012
+7995
+8999
+9399
+`
+
     mccData = parseCSV(mccDataCsv);
-    renegadeMccBlacklist = parseCSV(renegadeMccBlacklistCsv);
+    mccBlacklistRenegade = parseCSV(mccBlacklistRenegadeCsv);
+    mccBlacklistHi = parseCSV(mccBlacklistHiCsv);
+    mccBlacklistPlutus = parseCSV(mccBlacklistPlutusCsv);
     populateSelectMCC();
     populateSelectName();
     updateSelect('mcc');
