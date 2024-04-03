@@ -6,36 +6,57 @@
     <title>MCC Description Mapper</title>
     <style>
         body {
-            background-color: rgb(47, 21, 120);
+            font-family: Arial, sans-serif;
+            background-color: #2F1578FF;
             color: gold;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
             margin: 0;
-        }
-
-        select
-        {
-            overflow: hidden;
-            max-width: 200px;
-        }
-
-        input {
-            background-color: white;
-        }
-
-        .orange-background {
-            background-color: orange;
-        }
-
-        .green-background {
-            background-color: lawngreen;
+            padding: 0;
         }
 
         .container {
-            text-align: left;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #45298e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: gold;
+        }
+
+        label {
+            font-weight: bold;
+            color: gold;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #512da8;
+            color: #ffffff;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px #007bff;
+        }
+
+        label.support {
+            font-style: italic;
+            color: #888;
+        }
+
+        label.disclaimer {
+            color: #888;
         }
     </style>
 </head>
@@ -78,7 +99,8 @@
 
     <div>
         <br>
-        <label style="color: darkgray;">This calculator is an independent project and is not affiliated with the
+        <label style="color: darkgray;font-style: italic;">This calculator is an independent project and is not
+            affiliated with the
             official Renegade team. Please note that there is no warranty for its correctness, and users should verify
             results independently for accuracy.</label>
     </div>
