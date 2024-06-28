@@ -58,6 +58,14 @@
         label.disclaimer {
             color: #888;
         }
+
+        .blacklist-format {
+            background-color: orange !important;
+        }
+
+        .reward-format {
+            background-color: darkgreen !important;
+        }
     </style>
 </head>
 <body>
@@ -170,43 +178,19 @@
 
         if (!mccData) return;
 
+        let inRenegadeBlacklist;
+        let inHiBlacklist;
+        let inPlutusBlacklist;
         if (type === 'mcc') {
             const selectedMCC = selectMCC.value;
             selectName.value = "";
             const selectedRow = mccData.find(item => item.MCC === selectedMCC);
             if (selectedRow) {
                 selectName.value = selectedRow.Name;
-                const inRengadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectedMCC);
-                if (inRengadeBlacklist) {
-                    cashbackRenegade.value = `NO`;
-                    cashbackRenegade.classList.add('orange-background');
-                    cashbackRenegade.classList.remove('green-background');
-                } else {
-                    cashbackRenegade.value = `YES`;
-                    cashbackRenegade.classList.remove('orange-background');
-                    cashbackRenegade.classList.add('green-background');
-                }
-                const inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectedMCC);
-                if (inHiBlacklist) {
-                    cashbackHi.value = `NO`;
-                    cashbackHi.classList.add('orange-background');
-                    cashbackHi.classList.remove('green-background');
-                } else {
-                    cashbackHi.value = `YES`;
-                    cashbackHi.classList.remove('orange-background');
-                    cashbackHi.classList.add('green-background');
-                }
-                const inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectedMCC);
-                if (inPlutusBlacklist) {
-                    cashbackPlutus.value = `NO`;
-                    cashbackPlutus.classList.add('orange-background');
-                    cashbackPlutus.classList.remove('green-background');
-                } else {
-                    cashbackPlutus.value = `YES`;
-                    cashbackPlutus.classList.remove('orange-background');
-                    cashbackPlutus.classList.add('green-background');
-                }
             }
+            inRenegadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectedMCC);
+            inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectedMCC);
+            inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectedMCC);
         } else if (type === 'name') {
             const selectedName = selectName.value;
             selectMCC.value = "";
@@ -214,7 +198,23 @@
             if (selectedRow) {
                 selectMCC.value = selectedRow.MCC;
             }
+            inRenegadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectMCC.value);
+            inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectMCC.value);
+            inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectMCC.value);
         }
+
+        cashbackRenegade.value = inRenegadeBlacklist ? 'NO' : 'YES';
+        cashbackHi.value = inHiBlacklist ? 'NO' : 'YES';
+        cashbackPlutus.value = inPlutusBlacklist ? 'NO' : 'YES';
+
+        cashbackRenegade.classList.toggle('blacklist-format', inRenegadeBlacklist);
+        cashbackRenegade.classList.toggle('reward-format', !inRenegadeBlacklist);
+
+        cashbackHi.classList.toggle('blacklist-format', inHiBlacklist);
+        cashbackHi.classList.toggle('reward-format', !inHiBlacklist);
+
+        cashbackPlutus.classList.toggle('blacklist-format', inPlutusBlacklist);
+        cashbackPlutus.classList.toggle('reward-format', !inPlutusBlacklist);
     }
 
     function isMCCInBlacklist(blackList, mcc) {
