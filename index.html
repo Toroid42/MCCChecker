@@ -100,6 +100,11 @@
     </div>
 
     <div>
+        <label for="cashbackCryptoCom"><b>Cashback at Crypto.com:</b></label>
+        <input id="cashbackCryptoCom" type="text" readonly/>
+    </div>
+
+    <div>
         <br>
         <label><b>My ETH/BSC/MATIC wallet if you want to support me:</b>
             0xB9dcf72f21553013c56a1C92B2C7f1FB3f26a450</label>
@@ -175,12 +180,14 @@
         const cashbackRenegade = document.getElementById('cashbackRenegade');
         const cashbackHi = document.getElementById('cashbackHi');
         const cashbackPlutus = document.getElementById('cashbackPlutus');
+        const cashbackCryptoCom = document.getElementById('cashbackCryptoCom');
 
         if (!mccData) return;
 
         let inRenegadeBlacklist;
         let inHiBlacklist;
         let inPlutusBlacklist;
+        let inCryptoComBlacklist;
         if (type === 'mcc') {
             const selectedMCC = selectMCC.value;
             selectName.value = "";
@@ -191,6 +198,7 @@
             inRenegadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectedMCC);
             inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectedMCC);
             inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectedMCC);
+            inCryptoComBlacklist = isMCCInBlacklist(mccBlacklistCryptoCom, selectedMCC);
         } else if (type === 'name') {
             const selectedName = selectName.value;
             selectMCC.value = "";
@@ -201,20 +209,26 @@
             inRenegadeBlacklist = isMCCInBlacklist(mccBlacklistRenegade, selectMCC.value);
             inHiBlacklist = isMCCInBlacklist(mccBlacklistHi, selectMCC.value);
             inPlutusBlacklist = isMCCInBlacklist(mccBlacklistPlutus, selectMCC.value);
+            inCryptoComBlacklist = isMCCInBlacklist(mccBlacklistCryptoCom, selectedMCC);
         }
 
         cashbackRenegade.value = inRenegadeBlacklist ? 'NO' : 'YES';
-        cashbackHi.value = inHiBlacklist ? 'NO' : 'YES';
-        cashbackPlutus.value = inPlutusBlacklist ? 'NO' : 'YES';
-
         cashbackRenegade.classList.toggle('blacklist-format', inRenegadeBlacklist);
         cashbackRenegade.classList.toggle('reward-format', !inRenegadeBlacklist);
 
+        cashbackHi.value = inHiBlacklist ? 'NO' : 'YES';
         cashbackHi.classList.toggle('blacklist-format', inHiBlacklist);
         cashbackHi.classList.toggle('reward-format', !inHiBlacklist);
 
+
+        cashbackPlutus.value = inPlutusBlacklist ? 'NO' : 'YES';
         cashbackPlutus.classList.toggle('blacklist-format', inPlutusBlacklist);
         cashbackPlutus.classList.toggle('reward-format', !inPlutusBlacklist);
+
+
+        cashbackCryptoCom.value = inCryptoComBlacklist ? 'NO' : 'YES';
+        cashbackCryptoCom.classList.toggle('blacklist-format', inCryptoComBlacklist);
+        cashbackCryptoCom.classList.toggle('reward-format', !inCryptoComBlacklist);
     }
 
     function isMCCInBlacklist(blackList, mcc) {
@@ -661,10 +675,30 @@
 9399
 `
 
+    const mccBlacklistCryptoComCsv = `MCC
+4829
+4900
+5734
+5947
+6012
+6051
+6211
+6300
+6513
+6532
+6540
+7372
+8999
+9222
+9311
+9399
+`
+
     mccData = parseCSV(mccDataCsv);
     mccBlacklistRenegade = parseCSV(mccBlacklistRenegadeCsv);
     mccBlacklistHi = parseCSV(mccBlacklistHiCsv);
     mccBlacklistPlutus = parseCSV(mccBlacklistPlutusCsv);
+    mccBlacklistCryptoCom = parseCSV(mccBlacklistCryptoComCsv);
     populateSelectMCC();
     populateSelectName();
     updateSelect('mcc');
