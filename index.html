@@ -101,6 +101,11 @@
     </div>
 
     <div>
+        <label for="cashbackNexo"><b>Cashback at Nexo:</b></label>
+        <input id="cashbackNexo" type="text" readonly/>
+    </div>
+
+    <div>
         <br>
         <label><b>My ETH/BSC/MATIC wallet if you want to support me:</b>
             0xB9dcf72f21553013c56a1C92B2C7f1FB3f26a450</label>
@@ -120,6 +125,7 @@
     let mccBlacklistHi = [];
     let mccBlacklistPlutus = [];
     let mccBlacklistCryptoCom = [];
+    let mccBlacklistNexo = [];
 
     function parseCSV(csv) {
         const lines = csv.split('\n');
@@ -152,6 +158,7 @@
         mccBlacklistHi = await loadCSVData('csv-data/mccBlacklistHi.csv');
         mccBlacklistPlutus = await loadCSVData('csv-data/mccBlacklistPlutus.csv');
         mccBlacklistCryptoCom = await loadCSVData('csv-data/mccBlacklistCryptoCom.csv');
+        mccBlacklistNexo = await loadCSVData('csv-data/mccNexo.csv');
 
         populateSelectMCC();
         populateSelectName();
@@ -204,6 +211,7 @@
         const cashbackHi = document.getElementById('cashbackHi');
         const cashbackPlutus = document.getElementById('cashbackPlutus');
         const cashbackCryptoCom = document.getElementById('cashbackCryptoCom');
+        const cashbackNexo = document.getElementById('cashbackNexo');
 
         if (!mccData) return;
 
@@ -211,6 +219,7 @@
         let cashbackHiStatus;
         let cashbackPlutusStatus;
         let cashbackCryptoComStatus;
+        let cashbackNexoStatus;
 
         if (type === 'mcc') {
             const selectedMCC = selectMCC.value;
@@ -222,6 +231,7 @@
                 cashbackHiStatus = (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
                 cashbackPlutusStatus = (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
                 cashbackCryptoComStatus = (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackNexoStatus = (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
             }
         } else if (type === 'name') {
             const selectedName = selectName.value;
@@ -234,6 +244,7 @@
                 cashbackHiStatus = (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
                 cashbackPlutusStatus = (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
                 cashbackCryptoComStatus = (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC)  || { Cashback: "YES" }).Cashback;
+                cashbackNexoStatus = (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
             }
         }
 
@@ -241,6 +252,7 @@
         updateCashbackField(cashbackHi, cashbackHiStatus);
         updateCashbackField(cashbackPlutus, cashbackPlutusStatus);
         updateCashbackField(cashbackCryptoCom, cashbackCryptoComStatus);
+        updateCashbackField(cashbackNexo, cashbackNexoStatus);
     }
 
     function updateCashbackField(field, status) {
