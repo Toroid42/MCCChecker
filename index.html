@@ -155,6 +155,10 @@
 
         populateSelectMCC();
         populateSelectName();
+        // Update the fields based on the initial MCC or Name value
+        if (mccData.length > 0) {
+            updateSelect('mcc'); // This will initialize the fields based on the first MCC
+        }
     }
 
     function populateSelectMCC() {
