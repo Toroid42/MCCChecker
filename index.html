@@ -130,10 +130,10 @@
     function parseCSV(csv) {
         const lines = csv.split('\n');
         const result = [];
-        const headers = lines[0].split(',').map(h => h.trim());
+        const headers = lines[0].split(';').map(h => h.trim());
 
         for (let i = 1; i < lines.length; i++) {
-            const currentline = lines[i].split(',').map(c => c.trim());
+            const currentline = lines[i].split(';').map(c => c.trim());
             if (currentline.length === headers.length) { // Ignore empty lines
                 const obj = {};
                 for (let j = 0; j < headers.length; j++) {
