@@ -227,11 +227,11 @@
             const selectedRow = mccData.find(item => item.MCC === selectedMCC);
             if (selectedRow) {
                 selectName.value = selectedRow.Name;
-                cashbackRenegadeStatus = (mccBlacklistRenegade.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackHiStatus = (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackPlutusStatus = (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackCryptoComStatus = (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackNexoStatus = (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackRenegadeStatus = mccBlacklistRenegade.length === 0 ? "NO DATA" : (mccBlacklistRenegade.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackHiStatus = mccBlacklistHi.length === 0 ? "NO DATA" : (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackPlutusStatus = mccBlacklistPlutus.length === 0 ? "NO DATA" : (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackCryptoComStatus = mccBlacklistCryptoCom.length === 0 ? "NO DATA" : (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackNexoStatus = mccBlacklistNexo.length === 0 ? "NO DATA" : (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
             }
         } else if (type === 'name') {
             const selectedName = selectName.value;
@@ -240,11 +240,11 @@
             if (selectedRow) {
                 selectMCC.value = selectedRow.MCC;
                 // Find Cashback state in the blacklists
-                cashbackRenegadeStatus = (mccBlacklistRenegade.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackHiStatus = (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackPlutusStatus = (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
-                cashbackCryptoComStatus = (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC)  || { Cashback: "YES" }).Cashback;
-                cashbackNexoStatus = (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackRenegadeStatus = mccBlacklistRenegade.length === 0 ? "NO DATA" : (mccBlacklistRenegade.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackHiStatus = mccBlacklistHi.length === 0 ? "NO DATA" : (mccBlacklistHi.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackPlutusStatus = mccBlacklistPlutus.length === 0 ? "NO DATA" : (mccBlacklistPlutus.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackCryptoComStatus = mccBlacklistCryptoCom.length === 0 ? "NO DATA" : (mccBlacklistCryptoCom.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
+                cashbackNexoStatus = mccBlacklistNexo.length === 0 ? "NO DATA" : (mccBlacklistNexo.find(item => item.MCC === selectedRow.MCC) || { Cashback: "YES" }).Cashback;
             }
         }
 
@@ -265,7 +265,7 @@
             field.classList.remove('blacklist-format', 'reward-format');
             field.classList.add('conditional-format');
         } else {
-            field.value = 'NO';
+            field.value = status;
             field.classList.remove('reward-format', 'conditional-format');
             field.classList.add('blacklist-format');
         }
