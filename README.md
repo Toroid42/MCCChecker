@@ -1,8 +1,8 @@
-# MCCMapper
+# MCC Checker
 
-Link: [MCC Mapper](https://toroid42.github.io/MCCMapper/)
+Link: [MCC Checker](https://toroid42.github.io/MCCChecker/)
 
-The MCC Mapper can be used to check for a given Merchant Category Code (or the text representation of the code) if any
+The MCC Checker can be used to check for a given Merchant Category Code (or the text representation of the code) if any
 of the given cashback card providers (Renegade, Plutus, Hi, Crypto.com and Nexo) provide cashback or blacklist the MCC
 
 ## Update mccData.csv
