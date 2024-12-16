@@ -20,9 +20,11 @@ def expand_mcc_ranges(df):
                 end_code = int(range_match.group(2))
                 clean_name = name.split('(')[0].strip()
 
-                # Create rows for each MCC code in the range
-                for code in range(start_code, end_code + 1):
-                    expanded_rows.append({'MCC': code, 'Name': clean_name})
+                # TODO: This will result in too many entries, hard to manually select the items
+                ## Create rows for each MCC code in the range
+                #  for code in range(start_code, end_code + 1):
+                #      expanded_rows.append({'MCC': code, 'Name': clean_name})
+                expanded_rows.append({'MCC': start_code, 'Name': name})
         else:
             # For non-range rows, convert MCC to int if possible
             try:
